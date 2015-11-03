@@ -8,10 +8,10 @@
 
     <modelVersion>4.0.0</modelVersion>
     <groupId>fr.paris.lutece.plugins</groupId>
-    <artifactId>module-workflow-limit</artifactId>
+    <artifactId>module-workflow-formlimit</artifactId>
     <packaging>lutece-plugin</packaging>
     <version>1.0.0-SNAPSHOT</version>
-    <name>Lutece limit plugin</name>
+    <name>Lutece form limit plugin</name>
 
     <repositories>
         <repository>
@@ -52,8 +52,8 @@
     </dependencies>
 
      <properties>
-        <componentName>limit</componentName>
-        <jiraProjectName>WFLIMIT</jiraProjectName>
+        <componentName>formlimit</componentName>
+        <jiraProjectName>WFFORMLIMIT</jiraProjectName>
         <jiraComponentId>12909</jiraComponentId>
     </properties>
     

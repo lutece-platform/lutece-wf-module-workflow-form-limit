@@ -31,7 +31,7 @@
  *
  * License 1.0
  */
-package fr.paris.lutece.plugins.workflow.modules.limit.business;
+package fr.paris.lutece.plugins.workflow.modules.formlimit.business;
 
 import fr.paris.lutece.plugins.workflow.utils.WorkflowUtils;
 import fr.paris.lutece.plugins.workflowcore.business.config.ITaskConfigDAO;
@@ -47,21 +47,21 @@ import fr.paris.lutece.util.sql.DAOUtil;
  * library-workflow-core et stockant en base de
  * données les propriétés de l'objet TaskConfig
  */
-public class TaskLimitConfigDAO implements ITaskConfigDAO<TaskLimitConfig>
+public class TaskFormLimitConfigDAO implements ITaskConfigDAO<TaskFormLimitConfig>
 {
     private static final String SQL_QUERY_FIND_BY_PRIMARY_KEY = "SELECT id_task,number" +
-        " FROM workflow_task_limit_config  WHERE id_task=?";
-    private static final String SQL_QUERY_INSERT = "INSERT INTO  workflow_task_limit_config  " +
+        " FROM workflow_task_formlimit_config  WHERE id_task=?";
+    private static final String SQL_QUERY_INSERT = "INSERT INTO  workflow_task_formlimit_config  " +
         "(id_task,number)VALUES(?,?)";
-    private static final String SQL_QUERY_UPDATE = "UPDATE workflow_task_limit_config " + "SET id_task=?,number=?" +
+    private static final String SQL_QUERY_UPDATE = "UPDATE workflow_task_formlimit_config " + "SET id_task=?,number=?" +
         " WHERE id_task=?";
-    private static final String SQL_QUERY_DELETE = "DELETE FROM workflow_task_limit_config  WHERE id_task=? ";
+    private static final String SQL_QUERY_DELETE = "DELETE FROM workflow_task_formlimit_config  WHERE id_task=? ";
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public synchronized void insert( TaskLimitConfig config )
+    public synchronized void insert( TaskFormLimitConfig config )
     {
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_INSERT, WorkflowUtils.getPlugin(  ) );
 
@@ -78,7 +78,7 @@ public class TaskLimitConfigDAO implements ITaskConfigDAO<TaskLimitConfig>
     * {@inheritDoc}
     */
     @Override
-    public void store( TaskLimitConfig config )
+    public void store( TaskFormLimitConfig config )
     {
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_UPDATE, WorkflowUtils.getPlugin(  ) );
 
@@ -96,9 +96,9 @@ public class TaskLimitConfigDAO implements ITaskConfigDAO<TaskLimitConfig>
      * {@inheritDoc}
      */
     @Override
-    public TaskLimitConfig load( int nIdState )
+    public TaskFormLimitConfig load( int nIdState )
     {
-        TaskLimitConfig config = null;
+        TaskFormLimitConfig config = null;
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_FIND_BY_PRIMARY_KEY, WorkflowUtils.getPlugin(  ) );
 
         daoUtil.setInt( 1, nIdState );
@@ -109,7 +109,7 @@ public class TaskLimitConfigDAO implements ITaskConfigDAO<TaskLimitConfig>
 
         if ( daoUtil.next(  ) )
         {
-            config = new TaskLimitConfig(  );
+            config = new TaskFormLimitConfig(  );
             config.setIdTask( daoUtil.getInt( ++nPos ) );
             config.setNumber( daoUtil.getInt( ++nPos ) );
         }

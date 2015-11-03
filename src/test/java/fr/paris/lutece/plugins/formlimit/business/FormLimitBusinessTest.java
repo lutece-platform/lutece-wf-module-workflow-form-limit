@@ -31,37 +31,27 @@
  *
  * License 1.0
  */
-package fr.paris.lutece.plugins.workflow.modules.limit.business;
+package fr.paris.lutece.plugins.formlimit.business;
 
-import fr.paris.lutece.plugins.workflowcore.business.config.TaskConfig;
-
+import fr.paris.lutece.plugins.workflow.modules.formlimit.business.TaskFormLimitConfig;
+import fr.paris.lutece.test.LuteceTestCase;
 
 /**
- *
- * @author fallphenix
- * étendant la classe TaskConfig de la
- * librairie library-workflow-core et
- * destinéz à contenir la configuration de la tâche
- */
-public class TaskLimitConfig extends TaskConfig
+ * */
+public class FormLimitBusinessTest extends LuteceTestCase
 {
-    private int _nNumber;
+    private static final int NUMBER1 = 1;
 
-    /**
-       * set number of allocation
-       * @param nNumber  to set
-       */
-    public void setNumber( int nNumber )
+   /**
+    * */
+    public void testBusiness(  )
     {
-        this._nNumber = nNumber;
-    }
-
-    /**
-       * get number of allocation
-       * @return nNumber  of allocation
-       */
-    public int getNumber(  )
-    {
-        return _nNumber;
+                // Initialize an object
+    	TaskFormLimitConfig limit = new TaskFormLimitConfig();
+                limit.setNumber( NUMBER1 );
+        
+             
+                assertEquals( limit.getNumber() , NUMBER1 );
+        
     }
 }

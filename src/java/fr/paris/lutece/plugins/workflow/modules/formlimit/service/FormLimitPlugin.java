@@ -31,7 +31,7 @@
  *
  * License 1.0
  */
-package fr.paris.lutece.plugins.workflow.modules.limit.service;
+package fr.paris.lutece.plugins.workflow.modules.formlimit.service;
 
 import fr.paris.lutece.portal.service.plugin.Plugin;
 import fr.paris.lutece.portal.service.plugin.PluginDefaultImplementation;
@@ -43,9 +43,9 @@ import fr.paris.lutece.portal.service.plugin.PluginService;
  * LimitPlugin
  *
  */
-public class LimitPlugin extends PluginDefaultImplementation
+public class FormLimitPlugin extends PluginDefaultImplementation
 {
-    public static final String PLUGIN_NAME = "workflow-limit";
+    public static final String PLUGIN_NAME = "workflow-formlimit";
     public static final String BEAN_TRANSACTION_MANAGER = PLUGIN_NAME + ".transactionManager";
 
     /**

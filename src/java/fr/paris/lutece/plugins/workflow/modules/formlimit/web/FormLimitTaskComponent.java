@@ -31,9 +31,9 @@
  *
  * License 1.0
  */
-package fr.paris.lutece.plugins.workflow.modules.limit.web;
+package fr.paris.lutece.plugins.workflow.modules.formlimit.web;
 
-import fr.paris.lutece.plugins.workflow.modules.limit.business.TaskLimitConfig;
+import fr.paris.lutece.plugins.workflow.modules.formlimit.business.TaskFormLimitConfig;
 import fr.paris.lutece.plugins.workflow.web.task.NoFormTaskComponent;
 import fr.paris.lutece.plugins.workflowcore.service.config.ITaskConfigService;
 import fr.paris.lutece.plugins.workflowcore.service.task.ITask;
@@ -55,21 +55,21 @@ import javax.servlet.http.HttpServletRequest;
  * LimitTaskComponent
  *
  */
-public class LimitTaskComponent extends NoFormTaskComponent
+public class FormLimitTaskComponent extends NoFormTaskComponent
 {
     // TEMPLATES
-    private static final String TEMPLATE_TASK_LIMIT_CONFIG = "admin/plugins/workflow/modules/limit/task_limit_config.html";
+    private static final String TEMPLATE_TASK_FORMLIMIT_CONFIG = "admin/plugins/workflow/modules/formlimit/task_formlimit_config.html";
 
     // MARKS
     private static final String MARK_CONFIG_NUMBER = "number";
 
     // BEANS
-    private static final String BEAN_TASK_CONFIG_SERVICE = "workflow-limit.taskLimitConfigService";
+    private static final String BEAN_TASK_CONFIG_SERVICE = "workflow-formlimit.taskFormLimitConfigService";
 
     // SERVICES
     @Inject
     @Named( BEAN_TASK_CONFIG_SERVICE )
-    private ITaskConfigService _taskLimitConfigService;
+    private ITaskConfigService _taskFormLimitConfigService;
 
     /**
      * {@inheritDoc}
@@ -78,17 +78,17 @@ public class LimitTaskComponent extends NoFormTaskComponent
     public String getDisplayConfigForm( HttpServletRequest request, Locale locale, ITask task )
     {
         Map<String, Object> model = new HashMap<String, Object>(  );
-        TaskLimitConfig config = _taskLimitConfigService.findByPrimaryKey( task.getId(  ) );
+        TaskFormLimitConfig config = _taskFormLimitConfigService.findByPrimaryKey( task.getId(  ) );
 
         if ( config == null )
         {
-            config = new TaskLimitConfig(  );
+            config = new TaskFormLimitConfig(  );
             config.setNumber( 0 );
         }
 
         model.put( MARK_CONFIG_NUMBER, config.getNumber(  ) );
 
-        HtmlTemplate template = AppTemplateService.getTemplate( TEMPLATE_TASK_LIMIT_CONFIG, locale, model );
+        HtmlTemplate template = AppTemplateService.getTemplate( TEMPLATE_TASK_FORMLIMIT_CONFIG, locale, model );
 
         return template.getHtml(  );
     }

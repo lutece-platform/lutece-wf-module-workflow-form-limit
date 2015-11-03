@@ -31,7 +31,7 @@
  *
  * License 1.0
  */
-package fr.paris.lutece.plugins.workflow.modules.limit.service;
+package fr.paris.lutece.plugins.workflow.modules.formlimit.service;
 
 import fr.paris.lutece.plugins.directory.business.Record;
 import fr.paris.lutece.plugins.directory.business.RecordFieldFilter;
@@ -43,8 +43,8 @@ import fr.paris.lutece.plugins.form.modules.exportdirectory.business.FormConfigu
 import fr.paris.lutece.plugins.form.modules.exportdirectory.business.FormConfigurationHome;
 import fr.paris.lutece.plugins.form.modules.exportdirectory.service.ExportdirectoryPlugin;
 import fr.paris.lutece.plugins.form.service.FormPlugin;
-import fr.paris.lutece.plugins.workflow.modules.limit.business.TaskLimitConfig;
-import fr.paris.lutece.plugins.workflow.modules.limit.business.TaskLimitConfigDAO;
+import fr.paris.lutece.plugins.workflow.modules.formlimit.business.TaskFormLimitConfig;
+import fr.paris.lutece.plugins.workflow.modules.formlimit.business.TaskFormLimitConfigDAO;
 import fr.paris.lutece.plugins.workflowcore.business.resource.ResourceHistory;
 import fr.paris.lutece.plugins.workflowcore.service.config.ITaskConfigService;
 import fr.paris.lutece.plugins.workflowcore.service.resource.IResourceHistoryService;
@@ -74,15 +74,15 @@ import javax.servlet.http.HttpServletRequest;
  * dans les modules de se passer de l'implémentation de certaines méthodes
  * inutiles dans leur cas de figure.
  */
-public class TaskLimit extends SimpleTask
+public class TaskFormLimit extends SimpleTask
 {
-    private static final String FIELD_NUMBER_LIMIT = "module.workflow.limit.task_limit_config.label_task_number";
-    private static final String BEAN_TASK_CONFIG_SERVICE = "workflow-limit.taskLimitConfigService";
+    private static final String FIELD_NUMBER_FORMLIMIT = "module.workflow.formlimit.task_formlimit_config.label_task_number";
+    private static final String BEAN_TASK_CONFIG_SERVICE = "workflow-formlimit.taskFormLimitConfigService";
 
     // SERVICES
     @Inject
     @Named( BEAN_TASK_CONFIG_SERVICE )
-    private ITaskConfigService _taskLimitConfigService;
+    private ITaskConfigService _taskFormLimitConfigService;
     @Inject
     private IResourceHistoryService _resourceHistoryService;
 
@@ -90,12 +90,12 @@ public class TaskLimit extends SimpleTask
      * {@inheritDoc}
      */
     @Override
-    public void processTask( int nIdResourceHistory, HttpServletRequest request, Locale locale )
+    public synchronized void processTask( int nIdResourceHistory, HttpServletRequest request, Locale locale )
     {
         Plugin pluginForm = PluginService.getPlugin( FormPlugin.PLUGIN_NAME );
         Plugin pluginDirectory = PluginService.getPlugin( DirectoryPlugin.PLUGIN_NAME );
         Plugin pluginExportDirectory = PluginService.getPlugin( ExportdirectoryPlugin.PLUGIN_NAME );
-        TaskLimitConfig config = _taskLimitConfigService.findByPrimaryKey( this.getId(  ) );
+        TaskFormLimitConfig config = _taskFormLimitConfigService.findByPrimaryKey( this.getId(  ) );
         ResourceHistory resourceHistory = _resourceHistoryService.findByPrimaryKey( nIdResourceHistory );
 
         if ( ( config != null ) && ( resourceHistory != null ) )
@@ -118,7 +118,7 @@ public class TaskLimit extends SimpleTask
             //decrease the config task
             Form form = FormHome.findByPrimaryKey( nidForm, pluginForm );
 
-            if ( form != null )
+            if ( form != null && form.isActive())
             {
                 int nNumber = config.getNumber(  );
 
@@ -142,21 +142,10 @@ public class TaskLimit extends SimpleTask
 
                 config.setNumber( nNumber );
 
-                TaskLimitConfigDAO taskConfigDOA = new TaskLimitConfigDAO(  );
+                TaskFormLimitConfigDAO taskConfigDOA = new TaskFormLimitConfigDAO(  );
                 taskConfigDOA.store( config );
 
-                //                
-                //                if (nNumber > 0) {
-                //                    nNumber--;
-                //                    config.setNumber(nNumber);
-                //                    TaskLimitConfigDAO taskConfigDOA = new TaskLimitConfigDAO();
-                //                    taskConfigDOA.store(config);
-                //                } else {
-                //                    form.setActive(false);
-                //                    form.setAutoPublicationActive(false);
-                //                    FormHome.update(form, pluginForm);
-                //                }
-                //  I18nService.getLocalizedString( MESSAGE_LIMIT_MAX_VALUE, locale )
+              
             }
         }
     }
@@ -167,7 +156,7 @@ public class TaskLimit extends SimpleTask
     @Override
     public void doRemoveConfig(  )
     {
-        _taskLimitConfigService.remove( this.getId(  ) );
+        _taskFormLimitConfigService.remove( this.getId(  ) );
     }
 
     /**
@@ -176,11 +165,11 @@ public class TaskLimit extends SimpleTask
     @Override
     public String getTitle( Locale locale )
     {
-        TaskLimitConfig config = _taskLimitConfigService.findByPrimaryKey( this.getId(  ) );
+        TaskFormLimitConfig config = _taskFormLimitConfigService.findByPrimaryKey( this.getId(  ) );
 
         if ( config != null )
         {
-            return I18nService.getLocalizedString( FIELD_NUMBER_LIMIT, locale ) + " = " + config.getNumber(  );
+            return I18nService.getLocalizedString( FIELD_NUMBER_FORMLIMIT, locale ) + "  " + config.getNumber(  );
         }
 
         return StringUtils.EMPTY;
