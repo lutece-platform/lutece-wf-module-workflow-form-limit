@@ -5,7 +5,7 @@ DROP TABLE IF EXISTS workflow_task_formlimit_config;
 /*==============================================================*/
 
 CREATE TABLE workflow_task_formlimit_config(
-  id_task INT DEFAULT NULL,
+  id_task INT NOT NULL,
   number INT DEFAULT NULL,
   PRIMARY KEY  (id_task)
   );
